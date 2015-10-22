@@ -26,8 +26,8 @@ AddCustomFile.prototype.build = function() {
 module.exports = {
   name: 'addon-test-bug',
   included: function(app) {
-    app.import({
-      test: customTestFilePath
+    app.import(customTestFilePath, {
+      type: 'test'
     });
     app.import(customJsFilePath);
   },
