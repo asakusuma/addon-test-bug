@@ -1,26 +1,11 @@
 # Addon-test-bug
 
-This README outlines the details of collaborating on this Ember addon.
+Reproduces a bug where a file imported in the `include()` hook and then added to the test tree via `postprocessTree()` is not found. This is happening in ember-cli master, but not the 1.13.8.
 
-## Installation
+Simply run `npm install` and then `./node_modules/ember-cli/bin/ember test` and you'll see the error:
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+  ENOENT, no such file or directory '/Users/akusuma/workspace/opensource/addon-test-bug/tmp/concat_with_maps-input_base_path-HRQDorzQ.tmp/0/my-custom-test-files/test-file.js'
 
-## Running
+If you downgrade to 1.13.8, you no longer see the error. I included a tree in the `js` tree, which works fine even on master. Both trees are logged. On master, when the error occurs, the test tree is not logged, but the js tree is logged, which seems to indicate that the test tree is not being included soon enough.
 
-* `ember server`
-* Visit your app at http://localhost:4200.
-
-## Running Tests
-
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+If you take a look at [lib/broccoli/ember-app.js](https://github.com/ember-cli/ember-cli/blob/master/lib/broccoli/ember-app.js), the way test imports are handled is different than regular js imports.
