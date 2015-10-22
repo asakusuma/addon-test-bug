@@ -5,6 +5,7 @@ var fs = require('fs');
 var Plugin = require('broccoli-plugin');
 var mergeTrees = require('broccoli-merge-trees');
 var path = require('path');
+var log = require('broccoli-stew').log;
 
 var customTestFilePath = 'my-custom-test-files/foo.js';
 
@@ -29,7 +30,7 @@ module.exports = {
   },
   postprocessTree: function(type, tree){
     if (type === 'test') {
-      return mergeTrees([tree, new AddCustomTestFile([tree])]);
+      return mergeTrees([tree, log(new AddCustomTestFile([tree]))]);
     }
     return tree;
   }
