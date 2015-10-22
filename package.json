@@ -42,6 +42,8 @@
     "ember-addon"
   ],
   "dependencies": {
+    "broccoli-merge-trees": "^0.2.3",
+    "broccoli-plugin": "^1.2.0",
     "ember-cli-babel": "^5.1.5"
   },
   "ember-addon": {
